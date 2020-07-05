@@ -40,13 +40,12 @@ def main():
                    filter(Measurement.date.between('2016-08-23', '2017-08-23')).all()
 
          precipitation= []
-            for result in prcp_results:
+         for result in prcp_results:
                 row = {"date":"prcp"}
                 row["date"] = result[0]
                 row["prcp"] = float(result[1])
                 precipitation.append(row)
-
-            return jsonify(precipitation)
+                return jsonify(precipitation)
 
     @app.route("/api/v1.0/stations")
     def stations():
@@ -57,8 +56,8 @@ def main():
         return jsonify(station_list)
 
     @app.route("/api/v1.0/tobs")
-def tobs():
-    tobs_results = session.query(Measurement.station, Measurement.tobs).filter(Measurement.date.between('2016-08-01', '2017-08-01')).all()
+    def tobs():
+        tobs_results = session.query(Measurement.station, Measurement.tobs).filter(Measurement.date.between('2016-08-01', '2017-08-01')).all()
     
     tobs_list=[]
     for tobs in tobs_results:
