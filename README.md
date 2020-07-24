@@ -88,8 +88,11 @@ Python and SQLAlchemy was used to do basic climate analysis and data exploration
 
 * `/api/v1.0/<start>` and `/api/v1.0/<start>/<end>`
 
-  * Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range.
+  * A JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range was returned.
 
-  * When given the start only, calculate `TMIN`, `TAVG`, and `TMAX` for all dates greater than and equal to the start date.
+  * The `TMIN`, `TAVG`, and `TMAX` for all dates greater than and equal to the start date was calculated using the start date only.
 
-  * When given the start and the end date, calculate the `TMIN`, `TAVG`, and `TMAX` for dates between the start and end date inclusive.
+  * The `TMIN`, `TAVG`, and `TMAX` for dates between the start and end date inclusive was calculated using the both start and end date.
+
+![End](Images/End.png)
+
