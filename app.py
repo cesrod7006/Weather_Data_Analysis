@@ -4,7 +4,7 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func
-import datetime
+from datetime import datetime 
 
 from flask import Flask, jsonify
 
@@ -34,31 +34,34 @@ def main():
         f"/api/v1.0/<start>/<end>"
     )
 
-    @app.route("/api/v1.0/precipitation")
-    def precipitation():
-         prcp_results = session.query(Measurement.date, Measurement.prcp).\
-                   filter(Measurement.date.between('2016-08-23', '2017-08-23')).all()
+@app.route("/api/v1.0/precipitation")
+def precipitation():
+         
+    prcp_results = session.query(Measurement.date, Measurement.prcp).\
+        filter(Measurement.date.between('2016-08-23', '2017-08-23')).all()
 
-         precipitation= []
-         for result in prcp_results:
-                row = {"date":"prcp"}
-                row["date"] = result[0]
-                row["prcp"] = float(result[1])
-                precipitation.append(row)
-                return jsonify(precipitation)
 
-    @app.route("/api/v1.0/stations")
-    def stations():
-   
-        station_results = session.query(Station.station, Station.station_name).group_by(Station.station).all()
 
-        station_list = list(np.ravel(station_results))
-        return jsonify(station_list)
+    precipitation= []
+    for result in prcp_results:
+        row = {"date":"prcp"}
+        row["date"] = result[0]
+        row["prcp"] = float(result[1])
+        precipitation.append(row)
+        return jsonify(precipitation)
 
-    @app.route("/api/v1.0/tobs")
-    def tobs():
-        tobs_results = session.query(Measurement.station, Measurement.tobs).filter(Measurement.date.between('2016-08-01', '2017-08-01')).all()
+@app.route("/api/v1.0/stations")
+def stations():
+
+   station_results = session.query(Station.station, Station.station_name).group_by(Station.station).all()
+   station_list = list(np.ravel(station_results))
+   return jsonify(station_list)
+
+@app.route("/api/v1.0/tobs")
+def tobs():
     
+    tobs_results = session.query(Measurement.station, Measurement.tobs).filter(Measurement.date.between('2016-08-01', '2017-08-01')).all()
+
     tobs_list=[]
     for tobs in tobs_results:
         tobs_dict = {}
@@ -87,6 +90,7 @@ def calc_temps(start='start_date'):
         start_tobs.append(tobs_dict)
 
     return jsonify(start_tobs)
+
 @app.route("/api/v1.0/calc_temps/<start>/<end>")
 
 def calc_temps_2(start='start_date', end='end_date'):      
